@@ -10,6 +10,7 @@
 
 #include "y.tab.h"
 
+extern int yyended;
 extern int yyrunning;
 
 int
@@ -21,7 +22,8 @@ main(int argc,
 
 	while (yyrunning)
 	{
-		fprintf(stdout, "> ");
+		if (yyended)
+			fprintf(stdout, "> ");
 		yyparse();
 	}
 

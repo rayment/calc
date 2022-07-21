@@ -8,9 +8,15 @@ relaxed parsing requirements.
 
 Some examples of supported expressions include:
 
-	9 + -10
-	sin((4.25*5) / 9.1)
-	-2.102 ^ cos PI
+	> 9 + -10
+	  = -1
+	> sin((4.25*5) / 9.1)
+	  = 0.957399
+	> -2.102 ^ cos PI
+	  = -0.475737
+	> log (1000), 10; sqrt(9)
+	  = 3
+	  = 9
 
 To install calc on a machine, read the INSTALL file.
 

@@ -27,8 +27,10 @@ char errmsg[256];
 [qQ][uU][iI][tT]	{ yyrunning = 0; return EXIT; }
 [ \t\r\f]			{ /* ignore whitespace */ }
 "\n"				{ return END; }
+";"					{ return LINEEND; }
 "("					{ return LPAREN; }
 ")"					{ return RPAREN; }
+","					{ return COMMA; }
 
 	/* symbols */
 "+"					{ return PLUS; }
@@ -37,6 +39,7 @@ char errmsg[256];
 "/"					{ return DIVIDE; }
 "^"					{ return EXPONENT; }
 "%"					{ return MODULO; }
+"!"					{ return EXPONENTIAL; }
 
 	/* numbers */
 [0-9]+				{ yylval = atof(yytext); return NUMBER; }
@@ -49,6 +52,16 @@ char errmsg[256];
 [sS][iI][nN]		{ return SIN; }
 [cC][oO][sS]		{ return COS; }
 [tT][aA][nN]		{ return TAN; }
+[aA][sS][iI][nN]	{ return ASIN; }
+[aA][cC][oO][sS]	{ return ACOS; }
+[aA][tT][aA][nN]	{ return ATAN; }
+[aA][tT][aA][nN]2	{ return ATAN2; }
+[sS][qQ][rR][tT]	{ return SQRT; }
+[cC][bB][rR][tT]	{ return CBRT; }
+[lL][oO][gG]2		{ return LOG2; }
+[lL][oO][gG]10		{ return LOG10; }
+[lL][oO][gG]		{ return LOG; }
+[lL][nN]			{ return LN; }
 
 	/* other */
 .					{ yyerror("unrecognized symbol \"%s\"", yytext); }
