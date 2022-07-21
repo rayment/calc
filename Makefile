@@ -32,7 +32,7 @@ endif
 
 CSOURCES:=main.c lex.yy.c y.tab.c
 
-DISTFILES:=COPYING Makefile main.c lex.l parse.y incl.h
+DISTFILES:=README INSTALL CHANGES COPYING Makefile main.c lex.l parse.y incl.h
 
 all: clean lex yacc
 	$(CC) $(CCFLAGS) $(CXXFLAGS) $(CSOURCES) $(LDFLAGS) -o $(BINARY)
