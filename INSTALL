@@ -1,0 +1,26 @@
+INSTALL
+-------
+
+The following build requirements must be met to compile and install sticky:
+  - A C99 compatible C compiler
+  - GNU compatible Make
+
+Instructions:
+  - Go to the project root directory and run `make' to compile the program.
+  - Now run `make install' to install the binary to the system.
+    Note that admin permissions may be required to run this command.
+    Note also that a Unix-like system is most likely required.
+  - If your C compiler does not have a system link to `cc', edit Makefile
+    and change the 'CC' variable to the correct command.
+
+UNINSTALL
+---------
+
+The binary is installed by default to:
+	/usr/local/bin
+
+- This file can be removed by running
+  `make uninstall'.
+- Otherwise, you may remove the file manually with no negative consequence.
+- Note that admin permissions may be required to remove the file.
+

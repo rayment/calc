@@ -1,0 +1,19 @@
+calc - lightweight command-line calculator
+
+---------------------------------------------------
+
+calc is a simple terminal calculator designed to support both simple and
+sophisitcated mathematical expressions using natural (infix) language and
+relaxed parsing requirements.
+
+Some examples of supported expressions include:
+
+	9 + -10
+	sin((4.25*5) / 9.1)
+	-2.102 ^ cos PI
+
+To install calc on a machine, read the INSTALL file.
+
+calc is licensed under BSD 3-Clause.
+All license information is available in the included COPYING file.
+

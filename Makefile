@@ -5,6 +5,9 @@
 # Date created : 21/07/2022
 #
 
+# edit this to change the file location for `make install' and `make uninstall'
+PREFIX=/usr/local
+
 DEBUG?=0
 VERSION:=1.0.0
 BINARY:=calc
@@ -47,8 +50,15 @@ dist:
 	tar -cJf $(BINARY)-$(VERSION).tar.xz $(BINARY)-$(VERSION)
 	rm -rf $(BINARY)-$(VERSION)
 
+install:
+	install -d $(PREFIX)/bin
+	install -m 755 $(BINARY) $(PREFIX)/bin/$(BINARY)
+
+uninstall:
+	rm $(PREFIX)/bin/$(BINARY)
+
 clean:
 	rm -f $(BINARY) lex.yy.c y.tab.c y.tab.h
 
-.PHONY: all lex yacc dist clean
+.PHONY: all lex yacc dist install uninstall clean
 
