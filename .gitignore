@@ -1,0 +1,17 @@
+.DS_Store
+[.]_*
+*.swp
+*.a
+*.dll
+*.so
+*.so.*
+*.dylib
+*.exe
+*.out
+*.app
+*.dSYM/
+*.o
+calc
+lex.yy.c
+y.tab.c
+y.tab.h
