@@ -56,8 +56,15 @@ char fstr[128];
 %left EXPONENT
 %left EXPONENTIAL
 
-%start unit
+%start unit_list
 %%
+
+unit_list: unit unit_list
+         | unit
+         | EXIT { yyrunning = 0; yyended = 0; YYACCEPT; }
+         | END { yyrunning = 0; yyended = 1; YYACCEPT; }
+         | LINEEND { yyrunning = 0; yyended = 1; YYACCEPT; }
+		 ;
 
 unit: equation {
 	/* a simple 3-state machine to find the last significant digit
@@ -84,7 +91,7 @@ unit: equation {
 		*(fstr+k+1) = '\0';
 	/* now print the answer */
 	fprintf(stdout, "  = %s\n", fstr);
-	if (yyended)
+	if (yyended && !argv_redirect)
 		fputc('\n', stdout);
 	/* kill the parser because we only want to parse one line at a time */
 	YYACCEPT;
@@ -93,11 +100,6 @@ unit: equation {
 
 equation: expr END { $$ = $1; yyended = 1; }
         | expr LINEEND { $$ = $1; yyended = 0; }
-        | expr LINEEND END { $$ = $1; yyended = 1; }
-        | expr { $$ = $1; yyended = 0; }
-        | EXIT { yyrunning = 0; yyended = 0; YYACCEPT; }
-        | END { yyrunning = 0; yyended = 1; YYACCEPT; }
-        | LINEEND { yyrunning = 0; yyended = 1; YYACCEPT; }
         ;
 
 expr: add_expr
@@ -125,14 +127,21 @@ unary_expr: exp_expr { $$ = $1; }
           | MINUS exp_expr { $$ = -$2; }
 		  ;
 
-exp_expr: func_expr { $$ = $1; }
-        | func_expr EXPONENTIAL {
+exp_expr: func_expr_2 { $$ = $1; }
+        | func_expr_2 EXPONENTIAL {
 	i = ll = (int) $1;
 	while (--i > 1)
 		ll *= i;
 	$$ = ll;
                                 }
 		;
+
+func_expr_2: LOG primary COMMA primary { $$ = log($2) / log($4); }
+           | LOG LPAREN primary COMMA primary RPAREN { $$ = log($3) / log($5); }
+           | ATAN2 primary COMMA primary { $$ = atan2($2, $4); }
+           | ATAN2 LPAREN primary COMMA primary RPAREN { $$ = atan2($3, $5); }
+           | func_expr { $$ = $1; }
+		   ;
 
 func_expr: primary { $$ = $1; }
          | SIN primary { $$ = sin($2); }
@@ -146,14 +155,7 @@ func_expr: primary { $$ = $1; }
 		 | LOG2 primary { $$ = log2($2); }
 		 | LOG10 primary { $$ = log10($2); }
 		 | LN primary { $$ = log($2); }
-		 | func_expr_2 { $$ = $1; }
 		 ;
-
-func_expr_2: LOG primary COMMA primary { $$ = log($2) / log($4); }
-           | LOG LPAREN primary COMMA primary RPAREN { $$ = log($3) / log($5); }
-           | ATAN2 primary COMMA primary { $$ = atan2($2, $4); }
-           | ATAN2 LPAREN primary COMMA primary RPAREN { $$ = atan2($3, $5); }
-		   ;
 
 primary: NUMBER { $$ = $1; }
        | PI { $$ = V_PI; }
