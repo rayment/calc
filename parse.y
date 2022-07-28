@@ -1,5 +1,10 @@
 %{
 /*
+ * This file is licensed under BSD 3-Clause.
+ * All license information is available in the included COPYING file.
+ */
+
+/*
  * parse.y
  *
  * Author       : Finn Rayment <finn@rayment.fr>
@@ -25,6 +30,12 @@ void yyerror(char *, ...);
 int yyrunning = 1;
 int yyended = 1;
 
+extern int argv_redirect;
+
+#ifdef DEBUG
+int yydebug = 1;
+#endif /* DEBUG */
+
 int c, i, j, k;
 long long ll;
 char fstr[128];
@@ -44,6 +55,8 @@ char fstr[128];
 %left MULTIPLY DIVIDE
 %left EXPONENT
 %left EXPONENTIAL
+
+%start unit
 %%
 
 unit: equation {

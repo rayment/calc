@@ -9,7 +9,7 @@
 PREFIX=/usr/local
 
 DEBUG?=0
-VERSION:=1.0.0
+VERSION:=1.1.0
 BINARY:=calc
 
 CC:=gcc
@@ -18,14 +18,14 @@ YACC:=yacc
 
 CCFLAGS:=--std=c99
 CXXFLAGS:=-Wall -Wextra -Wpedantic -Werror --pedantic-errors \
-          -DVERSION=\"${VERSION}\" -D_POSIX_C_SOURCE \
+          -DVERSION=\"${VERSION}\" -D_POSIX_C_SOURCE=2 \
 		  -Wno-unused-function
 LEXFLAGS:=
 YACCFLAGS:=-d
 LDFLAGS:=-lm
 
 ifeq ($(DEBUG),1)
-CXXFLAGS+=-ggdb -DDEBUG=1
+CXXFLAGS+=-ggdb -DDEBUG=1 -DYYDEBUG
 else
 CXXFLAGS+=-O3
 endif

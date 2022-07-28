@@ -1,5 +1,10 @@
 %{
 /*
+ * This file is licensed under BSD 3-Clause.
+ * All license information is available in the included COPYING file.
+ */
+
+/*
  * lex.l
  *
  * Author       : Finn Rayment <finn@rayment.fr>
@@ -9,6 +14,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "incl.h"
 #include "y.tab.h"
@@ -17,6 +23,10 @@ extern void yyerror(char *, ...);
 extern int yyrunning;
 
 char errmsg[256];
+
+char *buf;
+YY_BUFFER_STATE strbuf;
+int argv_redirect;
 %}
 %option noyywrap
 %option yylineno
@@ -78,5 +88,43 @@ yyerror(char *fmt,
 	fputc('\n', stderr);
 	va_end(va);
 	exit(EXIT_FAILURE);
+}
+
+char *
+argv_parse_redirect(int argc,
+                    char **argv)
+{
+	int i;
+	size_t arglen;
+	for (i = optind, arglen = 0; i < argc; ++i)
+		arglen += 1 + strlen(*(argv+i));
+	buf = malloc(arglen);
+	if (!buf)
+	{
+		perror("malloc");
+		abort();
+	}
+	*buf = 0;
+	for (i = optind; i < argc; ++i)
+	{
+		if (i > optind)
+			strcat(buf, " ");
+		strcat(buf, *(argv+i));
+	}
+	strbuf = yy_scan_string(buf);
+	yy_switch_to_buffer(strbuf);
+	argv_redirect = 1;
+	return buf;
+}
+
+void
+argv_parse_cleanup(void)
+{
+	if (argv_redirect)
+	{
+		argv_redirect = 0;
+		yy_delete_buffer(strbuf);
+	}
+	free(buf);
 }
 
