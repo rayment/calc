@@ -1,6 +1,14 @@
 Changelog for `calc'
 ====================
 
+v1.1.0
+------
+Released 28/07/2022.
+
++ Added command-line parsing option instead of forced interactive-mode.
+
+~ Fixed conflicts causing erroneous results on multiple equations on one line.
+
 v1.0.0
 ------
 Released 21/07/2022.
