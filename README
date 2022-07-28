@@ -16,7 +16,7 @@ Some examples of supported expressions include:
 	  = -0.475737
 	> log (1000), 10; sqrt(9)
 	  = 3
-	  = 9
+	  = 3
 
 To install calc on a machine, read the INSTALL file.
 
