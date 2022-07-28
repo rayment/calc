@@ -26,6 +26,7 @@ LDFLAGS:=-lm
 
 ifeq ($(DEBUG),1)
 CXXFLAGS+=-ggdb -DDEBUG=1 -DYYDEBUG
+YACCFLAGS+=-v -Wcounterexamples
 else
 CXXFLAGS+=-O3
 endif
