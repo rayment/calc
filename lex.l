@@ -72,6 +72,8 @@ int argv_redirect;
 [lL][oO][gG]10		{ return LOG10; }
 [lL][oO][gG]		{ return LOG; }
 [lL][nN]			{ return LN; }
+[dD][eE][gG]		{ return DEG; }
+[rR][aA][dD]		{ return RAD; }
 
 	/* other */
 .					{ yyerror("unrecognized symbol \"%s\"", yytext); }

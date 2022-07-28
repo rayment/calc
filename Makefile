@@ -9,7 +9,7 @@
 PREFIX=/usr/local
 
 DEBUG?=0
-VERSION:=1.1.0
+VERSION:=1.2.0
 BINARY:=calc
 
 CC:=gcc
@@ -59,7 +59,7 @@ uninstall:
 	rm $(PREFIX)/bin/$(BINARY)
 
 clean:
-	rm -f $(BINARY) lex.yy.c y.tab.c y.tab.h
+	rm -f $(BINARY) lex.yy.c y.tab.c y.tab.h y.output
 
 .PHONY: all lex yacc dist install uninstall clean
 

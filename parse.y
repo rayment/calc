@@ -21,8 +21,10 @@
 #define EQ_POINT    2
 #define EQ_FRACTION 3
 
-#define V_PI 3.14159265358979323846
-#define V_E  2.71828182845904523536
+#define V_PI  3.14159265358979323846
+#define V_E   2.71828182845904523536
+#define V_RAD 0.0174532925199
+#define V_DEG 57.2957795131
 
 int yylex(void);
 void yyerror(char *, ...);
@@ -46,6 +48,7 @@ char fstr[128];
 
 %token PI E
 %token SIN COS TAN ASIN ACOS ATAN ATAN2
+%token DEG RAD
 %token SQRT CBRT
 %token LOG2 LOG10 LOG LN
 
@@ -155,6 +158,8 @@ func_expr: primary { $$ = $1; }
 		 | LOG2 primary { $$ = log2($2); }
 		 | LOG10 primary { $$ = log10($2); }
 		 | LN primary { $$ = log($2); }
+		 | DEG primary { $$ = $2 * V_DEG; }
+		 | RAD primary { $$ = $2 * V_RAD; }
 		 ;
 
 primary: NUMBER { $$ = $1; }
