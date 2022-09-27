@@ -22,7 +22,7 @@ CXXFLAGS:=-Wall -Wextra -Wpedantic -Werror --pedantic-errors \
 		  -Wno-unused-function
 LEXFLAGS:=
 YACCFLAGS:=-d
-LDFLAGS:=-lm
+LDFLAGS:=-lm -lreadline
 
 ifeq ($(DEBUG),1)
 CXXFLAGS+=-ggdb -DDEBUG=1 -DYYDEBUG

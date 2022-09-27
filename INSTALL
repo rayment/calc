@@ -1,9 +1,10 @@
 INSTALL
 -------
 
-The following build requirements must be met to compile and install sticky:
+The following build requirements must be met to compile and install calc:
   - A C99 compatible C compiler
   - GNU compatible Make
+  - GNU readline and GNU history libraries
 
 Instructions:
   - Go to the project root directory and run `make' to compile the program.

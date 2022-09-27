@@ -92,6 +92,19 @@ yyerror(char *fmt,
 	exit(EXIT_FAILURE);
 }
 
+void
+switch_to_buffer(char *buf)
+{
+	strbuf = yy_scan_string(buf);
+	yy_switch_to_buffer(strbuf);
+}
+
+void
+clean_buffer(void)
+{
+	yy_delete_buffer(strbuf);
+}
+
 char *
 argv_parse_redirect(int argc,
                     char **argv)
@@ -113,8 +126,7 @@ argv_parse_redirect(int argc,
 			strcat(buf, " ");
 		strcat(buf, *(argv+i));
 	}
-	strbuf = yy_scan_string(buf);
-	yy_switch_to_buffer(strbuf);
+	switch_to_buffer(buf);
 	argv_redirect = 1;
 	return buf;
 }
@@ -125,7 +137,7 @@ argv_parse_cleanup(void)
 	if (argv_redirect)
 	{
 		argv_redirect = 0;
-		yy_delete_buffer(strbuf);
+		clean_buffer();
 	}
 	free(buf);
 }

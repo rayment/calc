@@ -1,6 +1,13 @@
 Changelog for `calc'
 ====================
 
+v1.2.0
+------
+Released 28/9/2022.
+
++ Added deg(x) and rad(x) commands for degree/radian conversion.
++ The REPL input now uses GNU readline for better parsing and input history.
+
 v1.1.0
 ------
 Released 28/07/2022.
